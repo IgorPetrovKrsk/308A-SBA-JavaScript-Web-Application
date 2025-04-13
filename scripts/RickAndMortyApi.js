@@ -69,9 +69,16 @@ export function fetchRandomCharacter() {
         return randomCharacterResponce.data;
     });
 }
+export function fetchCharactersByFilter(status, gender, name) {
+    return __awaiter(this, void 0, void 0, function* () {
+        alert(`Ststus ${status} gender  ${gender} name ${name}`);
+        let charactersByFilter = yield axios.get(`character`);
+        return charactersByFilter.data.results;
+    });
+}
 export function favourite(id, target) {
     return __awaiter(this, void 0, void 0, function* () {
-        alert(`Favourite buttoc pushed at ${target}`);
+        alert(`Favourite buttoc pushed at ${target} , and id ${id}`);
         //console.log(`Fav button clicked ${imgId}`);
         //checking if the image is already in favorites or not
         // let fav = favorites.find(it => it.image.id === imgId);

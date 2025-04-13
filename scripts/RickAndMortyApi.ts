@@ -10,7 +10,7 @@ export async function init() { //inits for api
         let mainResponce = axios.get(`character`);
         mainResponce = await mainResponce;
         if (mainResponce.status === 200) {
-            charCount = mainResponce.data.info.count;
+            charCount = mainResponce.data.info.count;           
         } else {
             console.error(`Error fetching data from Rick And Morty API`);
 
@@ -66,9 +66,15 @@ export async function fetchRandomCharacter() {
     return randomCharacterResponce.data;
 }
 
+export async function fetchCharactersByFilter(status:String, gender:String, name:String){
+    alert (`Ststus ${status} gender  ${gender} name ${name}`)
+    let charactersByFilter = await axios.get(`character`);
+    return charactersByFilter.data.results;
+}
+
 export async function favourite(id:Number,target:EventTarget) {
 
-    alert (`Favourite buttoc pushed at ${target}`)
+    alert (`Favourite buttoc pushed at ${target} , and id ${id}`)
     //console.log(`Fav button clicked ${imgId}`);
     //checking if the image is already in favorites or not
     // let fav = favorites.find(it => it.image.id === imgId);

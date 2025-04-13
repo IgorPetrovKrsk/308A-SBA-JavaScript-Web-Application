@@ -13,23 +13,57 @@
 
 <body>
     <h1>Rick and Morty characters</h1>
+    <label for="status">Status:</label>
+    <select id="status" name="status">
+        <option value="all" selected>All</option>
+        <option value="alive">Alive</option>
+        <option value="dead">Dead</option>
+        <option value="unknown">Unknown</option>
+    </select>
+
+    <!-- Dropdown for Gender -->
+    <label for="gender">Gender:</label>
+    <select id="gender" name="gender">
+        <option value="all" selected>All</option>
+        <option value="female">Female</option>
+        <option value="male">Male</option>
+        <option value="genderless">Genderless</option>
+        <option value="unknown">Unknown</option>
+    </select>
+
     <input type="text" name="inSearch" id="inSearch" placeholder="Search for a character...">
     <button id="btnSearch">Search</button>
-    <button id="btnRandom"> Get random character</button>
+    <button id="btnRandom">Get random character</button>
+    <br>
+    <br>
+    <button id="btnFavorites">❤ Favorites ❤</button>
+
+    
     <br>
     <br>
     <div id="divCharacters">
         <img id="imgCharacter" src="images/Rick_and_Morty_default_character.png" width="200"
             alt="Rick and Morty default character">
+            <!-- <h3>Name:</h3>
+            <p>Location:</p>
+            <p>Species:</p>
+            <p>Status:</p>
+            <p>Type:</p> -->
     </div>
 </body>
 
   <!-- Character Template -->
   <template id="characterTemplate">
-    <div class="carousel-item">
+    <div class="card-item">
         <div class="card">
             <div class="img-wrapper">
                 <img src="images/Rick_and_Morty_default_character.png" class="" alt="Rick and Morty character" />
+                <h3>Name:</h3>
+                <p>Location:</p>
+                <p>Species:</p>
+                <p>Status:</p>
+                <p>Type:</p>
+
                 <div data-img-id="" class="favourite-button">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" fill="currentColor">
                         <!--! Font Awesome Pro 6.4.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->

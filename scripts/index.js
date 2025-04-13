@@ -10,8 +10,11 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 import * as RickAndMortyApi from "./rickAndMortyApi.js";
 import { createCharacterCard } from "./characterCards.js";
 const divCharacters = document.getElementById("divCharacters");
-let btnGetRandomCharacter = document.getElementById(`btnRandom`);
-let btnSearchCharacters = document.getElementById(`btnSearch`);
+const btnGetRandomCharacter = document.getElementById(`btnRandom`);
+const btnSearchCharacters = document.getElementById(`btnSearch`);
+const selStatus = document.getElementById(`status`);
+const selGender = document.getElementById(`gender`);
+const inSearch = document.getElementById(`inSearch`);
 if (btnGetRandomCharacter) { //because tipeScript thinks that button can be null (and he is right)
     btnGetRandomCharacter.addEventListener(`click`, getRandomCharacter);
 }
@@ -28,10 +31,10 @@ function getRandomCharacter() {
 }
 function getCharactersByFilter() {
     return __awaiter(this, void 0, void 0, function* () {
-        const characterList = yield RickAndMortyApi.fetchCharactersByFilter();
-        console.log(characterList);
+        const characterList = yield RickAndMortyApi.fetchCharactersByFilter(selStatus.value, selGender.value, inSearch.value);
+        // console.log(characterList);
         if (characterList.length === 0) {
-            divCharacters.innerHTML = ` <img id="imgCharacter" src="images/Rick_and_Morty_not_found.png" width="200" alt="Image of not found">`;
+            divCharacters.innerHTML = ` <img id="imgCharacter" src="images/Rick_and_Morty_not_found.png" width="300" alt="Image of not found">`;
         }
         else {
             divCharacters.innerHTML = '';

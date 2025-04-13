@@ -1,7 +1,7 @@
 // @ts-ignore
 import axios from "https://cdn.skypack.dev/axios";
 
-let charCount=0; //number of characters from API
+let charCount = 0; //number of characters from API
 
 export async function init() { //inits for api
     axios.defaults.baseURL = 'https://rickandmortyapi.com/api/';
@@ -10,7 +10,7 @@ export async function init() { //inits for api
         let mainResponce = axios.get(`character`);
         mainResponce = await mainResponce;
         if (mainResponce.status === 200) {
-            charCount = mainResponce.data.info.count;           
+            charCount = mainResponce.data.info.count;
         } else {
             console.error(`Error fetching data from Rick And Morty API`);
 
@@ -61,20 +61,33 @@ export async function init() { //inits for api
 
 
 export async function fetchRandomCharacter() {
-    let randomCharacterNumber = Math.floor(Math.random() * charCount)+1;
+    let randomCharacterNumber = Math.floor(Math.random() * charCount) + 1;
     let randomCharacterResponce = await axios.get(`character/${randomCharacterNumber}`);
     return randomCharacterResponce.data;
 }
 
-export async function fetchCharactersByFilter(status:String, gender:String, name:String){
-    alert (`Ststus ${status} gender  ${gender} name ${name}`)
-    let charactersByFilter = await axios.get(`character`);
-    return charactersByFilter.data.results;
+export async function fetchCharactersByFilter(status: string, gender: string, name: string) {
+    let params: { [key: string]: string } = {};
+    if (status.toLocaleLowerCase() !== `all`) {
+        params[`status`] = status;
+    }
+    if (gender.toLocaleLowerCase() !== `all`) {
+        params[`gender`] = gender;
+    }
+    if (name !== ``) {
+        params[`name`] = name;
+    }
+    try {
+        let charactersByFilter = await axios.get(`character`, { params });
+        return charactersByFilter.data.results;
+    } catch (error) {
+        return []; //returning empty array as the result
+    }
 }
 
-export async function favourite(id:Number,target:EventTarget) {
+export async function favourite(id: Number, target: EventTarget) {
 
-    alert (`Favourite buttoc pushed at ${target} , and id ${id}`)
+    alert(`Favourite buttoc pushed at ${target} , and id ${id}`)
     //console.log(`Fav button clicked ${imgId}`);
     //checking if the image is already in favorites or not
     // let fav = favorites.find(it => it.image.id === imgId);

@@ -71,9 +71,23 @@ export function fetchRandomCharacter() {
 }
 export function fetchCharactersByFilter(status, gender, name) {
     return __awaiter(this, void 0, void 0, function* () {
-        alert(`Ststus ${status} gender  ${gender} name ${name}`);
-        let charactersByFilter = yield axios.get(`character`);
-        return charactersByFilter.data.results;
+        let params = {};
+        if (status.toLocaleLowerCase() !== `all`) {
+            params[`status`] = status;
+        }
+        if (gender.toLocaleLowerCase() !== `all`) {
+            params[`gender`] = gender;
+        }
+        if (name !== ``) {
+            params[`name`] = name;
+        }
+        try {
+            let charactersByFilter = yield axios.get(`character`, { params });
+            return charactersByFilter.data.results;
+        }
+        catch (error) {
+            return []; //returning empty array as the result
+        }
     });
 }
 export function favourite(id, target) {

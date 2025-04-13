@@ -15,3 +15,4 @@ I always struggle with design. I don't think it will change for future projects.
 
 What would you add to or change about your application if given more time?
 I would redesign the site, add some styling, and make pagination work.
+Also, I would add loading indicators.

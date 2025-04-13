@@ -10,9 +10,11 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 import * as RickAndMortyApi from "./rickAndMortyApi.js";
 import * as CatApi from "./catApi.js";
 import { createCharacterCard } from "./characterCards.js";
+export let isFavoritePage = false;
 const divCharacters = document.getElementById("divCharacters");
 const btnGetRandomCharacter = document.getElementById(`btnRandom`);
 const btnSearchCharacters = document.getElementById(`btnSearch`);
+const btnFavorites = document.getElementById(`btnFavorites`);
 const selStatus = document.getElementById(`status`);
 const selGender = document.getElementById(`gender`);
 const inSearch = document.getElementById(`inSearch`);
@@ -22,8 +24,28 @@ if (btnGetRandomCharacter) { //because tipeScript thinks that button can be null
 if (btnSearchCharacters) {
     btnSearchCharacters.addEventListener(`click`, getCharactersByFilter);
 }
+if (btnFavorites) {
+    btnFavorites.addEventListener(`click`, getFavorites);
+}
+export function getFavorites() {
+    return __awaiter(this, void 0, void 0, function* () {
+        const characterList = yield RickAndMortyApi.fetchCharactersByFavorites();
+        isFavoritePage = true;
+        if (characterList.length === 0) {
+            divCharacters.innerHTML = ` <img id="imgCharacter" src="images/Rick_and_Morty_not_found.png" width="300" alt="Image of not found">`;
+        }
+        else {
+            divCharacters.innerHTML = '';
+            characterList.forEach(it => {
+                const character = createCharacterCard(it);
+                divCharacters.appendChild(character);
+            });
+        }
+    });
+}
 function getRandomCharacter() {
     return __awaiter(this, void 0, void 0, function* () {
+        isFavoritePage = false;
         const randomCharacterData = yield RickAndMortyApi.fetchRandomCharacter();
         const randomCharacterCard = createCharacterCard(randomCharacterData);
         divCharacters.innerHTML = '';
@@ -32,8 +54,8 @@ function getRandomCharacter() {
 }
 function getCharactersByFilter() {
     return __awaiter(this, void 0, void 0, function* () {
+        isFavoritePage = false;
         const characterList = yield RickAndMortyApi.fetchCharactersByFilter(selStatus.value, selGender.value, inSearch.value);
-        // console.log(characterList);
         if (characterList.length === 0) {
             divCharacters.innerHTML = ` <img id="imgCharacter" src="images/Rick_and_Morty_not_found.png" width="300" alt="Image of not found">`;
         }

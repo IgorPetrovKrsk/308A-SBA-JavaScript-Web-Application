@@ -19,7 +19,6 @@ export function createCharacterCard(CharacterData) {
     favBtn.addEventListener("click", (ev) => {
         favourite(CharacterData.id.toString(), ev.currentTarget);
     });
-    console.log(isFavorite(CharacterData.id.toString()));
     if (isFavorite(CharacterData.id.toString())) {
         favBtn.classList.add(`favourite-button-selected`);
     }

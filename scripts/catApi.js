@@ -13,9 +13,10 @@ const catAxios = axios.create({
     baseURL: "https://api.thecatapi.com/v1/",
     timeout: 5000,
 });
+import { isFavoritePage, getFavorites } from "./index.js";
 const API_KEY = "live_UiYOtzJxYjaOcMznmcDsCQWt40ZtbTnzJfK79kFocCstrGVSPTv8rIMbVsmsuNz3"; //this is not really a good idea to store keys in the open
 const USER_NAME = "Rick_and_Morty_user";
-let favorites = []; // array to store img id of favorites
+export let favorites = []; // array to store img id of favorites
 export function init() {
     return __awaiter(this, void 0, void 0, function* () {
         let favResponse = yield catAxios.get(`favourites`, {
@@ -28,56 +29,52 @@ export function init() {
             }
         });
         favorites = favResponse.data;
-        console.log(`Favorites ${JSON.stringify(favorites[0])}`);
+        // console.log(`Favorites ${JSON.stringify(favorites[0])}`);
     });
 }
 export function favourite(id, target) {
     return __awaiter(this, void 0, void 0, function* () {
         //checking if the image is already in favorites or not
-        let fav = favorites.find(it => it.id === id);
-        // if (fav !== undefined) { //this image is already in favorites so delet
-        //     try {
-        //         await catAxios.delete(`favourites/${fav.id}`,
-        //             // {
-        //             //     "image_id": imgId,
-        //             //     "sub_id": USER_NAME
-        //             // },
-        //             {
-        //                 headers: {
-        //                     "x-api-key": API_KEY
-        //                 },
-        //             }
-        //         );
-        //         favorites = favorites.filter(it => it.image.id !== imgId);
-        //         target.classList.remove(`favourite-button-selected`);
-        //         if (isFavoritePage) {
-        //             axiosFavorites(USER_NAME); // repopulating the carousel
-        //         }
-        //     } catch (error) {
-        //         console.error(`Error deleting favourite: ${error}`);
-        //     }
-        // } else { //adding
-        try {
-            let favId = yield catAxios.post(`favourites`, {
-                "image_id": "" + id,
-                "sub_id": USER_NAME
-            }, {
-                headers: {
-                    "x-api-key": API_KEY
-                },
-            });
-            favId = favId.data.id; // this is the Unique id of the favorite image (store it so that we can delet it)
-            favorites.push({
-                "id": favId,
-                "image_id": id,
-                "sub_id": USER_NAME
-            });
-            //target.classList.add(`favourite-button-selected`);
+        let fav = favorites.find(it => it.image_id === id);
+        if (fav !== undefined) { //this image is already in favorites so delete
+            try {
+                yield catAxios.delete(`favourites/${fav.id}`, {
+                    headers: {
+                        "x-api-key": API_KEY
+                    },
+                });
+                favorites = favorites.filter(it => it.image_id !== id);
+                target.classList.remove(`favourite-button-selected`);
+                if (isFavoritePage) {
+                    getFavorites(); //reloading the favorites
+                }
+            }
+            catch (error) {
+                console.error(`Error deleting favourite: ${error}`);
+            }
         }
-        catch (error) {
-            console.error(`Error adding favourite: ${error}`);
+        else { //adding
+            try {
+                let favId = yield catAxios.post(`favourites`, {
+                    "image_id": "" + id,
+                    "sub_id": USER_NAME
+                }, {
+                    headers: {
+                        "x-api-key": API_KEY
+                    },
+                });
+                favId = favId.data.id; // this is the Unique id of the favorite image (store it so that we can delet it)
+                favorites.push({
+                    "id": favId,
+                    "image_id": id,
+                    "sub_id": USER_NAME
+                });
+                target.classList.add(`favourite-button-selected`);
+            }
+            catch (error) {
+                console.error(`Error adding favourite: ${error}`);
+            }
         }
-        // }
     });
 }
 export function isFavorite(id) {

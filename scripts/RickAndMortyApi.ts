@@ -3,8 +3,9 @@ import axios from "https://cdn.skypack.dev/axios";
 const rickAndMortyAxios = axios.create({
     baseURL: 'https://rickandmortyapi.com/api/',
     timeout: 5000,
-  });
+});
 
+import { favorites } from "./catApi.js"
 let charCount = 0; //number of characters from API
 
 export async function init() { //inits for api
@@ -44,6 +45,17 @@ export async function fetchCharactersByFilter(status: string, gender: string, na
     try {
         let charactersByFilter = await rickAndMortyAxios.get(`character`, { params });
         return charactersByFilter.data.results;
+    } catch (error) {
+        return []; //returning empty array as the result
+    }
+}
+
+export async function fetchCharactersByFavorites() {
+    let favString = favorites.map(it => it.image_id).join(`,`);   
+
+    try {
+        let charactersByFilter = await rickAndMortyAxios.get(`character/${favString}`);
+        return charactersByFilter.data;
     } catch (error) {
         return []; //returning empty array as the result
     }

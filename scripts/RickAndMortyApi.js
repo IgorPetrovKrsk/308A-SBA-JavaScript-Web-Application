@@ -13,6 +13,7 @@ const rickAndMortyAxios = axios.create({
     baseURL: 'https://rickandmortyapi.com/api/',
     timeout: 5000,
 });
+import { favorites } from "./catApi.js";
 let charCount = 0; //number of characters from API
 export function init() {
     return __awaiter(this, void 0, void 0, function* () {
@@ -53,6 +54,18 @@ export function fetchCharactersByFilter(status, gender, name) {
         try {
             let charactersByFilter = yield rickAndMortyAxios.get(`character`, { params });
             return charactersByFilter.data.results;
+        }
+        catch (error) {
+            return []; //returning empty array as the result
+        }
+    });
+}
+export function fetchCharactersByFavorites() {
+    return __awaiter(this, void 0, void 0, function* () {
+        let favString = favorites.map(it => it.image_id).join(`,`);
+        try {
+            let charactersByFilter = yield rickAndMortyAxios.get(`character/${favString}`);
+            return charactersByFilter.data;
         }
         catch (error) {
             return []; //returning empty array as the result

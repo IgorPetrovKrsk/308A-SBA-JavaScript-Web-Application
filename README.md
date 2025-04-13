@@ -1,3 +1,8 @@
 Small JavaScript Web application
 
-![image](https://github.com/user-attachments/assets/35f32657-3bf4-48df-85ed-954d7952ef1e)
+Shows different Rick and Morty characters using Rick and Morty API.
+Displays a random character.
+Storing and deleting favorite characters using the Cat API (because I can)
+
+![image](https://github.com/user-attachments/assets/73d3e65f-326b-4512-b939-ed75e33e5897)
+

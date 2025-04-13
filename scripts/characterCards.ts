@@ -1,4 +1,4 @@
-import {favourite} from "./rickAndMortyApi.js"
+import {favourite,isFavorite} from "./catApi.js"
 
 //interfaces for typescript
 export interface Character {
@@ -22,29 +22,33 @@ export interface Character {
     created: string;
 }
 
-export function createCharacterCard(randomCharacterData: Character) {
+export function createCharacterCard(CharacterData: Character) {
     const template = document.querySelector("#characterTemplate") as HTMLTemplateElement;
     const clone = template.content.firstElementChild.cloneNode(true) as Element;
 
     const img = clone.querySelector("img");
-    img.src = randomCharacterData.image;
-    img.alt = `Rick and Morty character ${randomCharacterData.name}`;
+    img.src = CharacterData.image;
+    img.alt = `Rick and Morty character ${CharacterData.name}`;
 
     const charName = clone.querySelector("h3");
-    charName.textContent = `Name: ${randomCharacterData.name}`;
+    charName.textContent = `Name: ${CharacterData.name}`;
     let nextSibling = charName.nextElementSibling;
-    nextSibling.textContent = `Location: ${randomCharacterData.location.name}`;
+    nextSibling.textContent = `Location: ${CharacterData.location.name}`;
     nextSibling = nextSibling.nextElementSibling;
-    nextSibling.textContent = `Species: ${randomCharacterData.species}`;
+    nextSibling.textContent = `Species: ${CharacterData.species}`;
     nextSibling = nextSibling.nextElementSibling;
-    nextSibling.textContent = `Status: ${randomCharacterData.status}`;
+    nextSibling.textContent = `Status: ${CharacterData.status}`;
     nextSibling = nextSibling.nextElementSibling;
-    nextSibling.textContent = `Type: ${randomCharacterData.type}`;
+    nextSibling.textContent = `Type: ${CharacterData.type}`;
     
     const favBtn = clone.querySelector(".favourite-button");
     favBtn.addEventListener("click", (ev) => {
-        favourite(randomCharacterData.id, ev.currentTarget);
+        favourite(CharacterData.id.toString(), ev.currentTarget);
     });
-
+    console.log(isFavorite(CharacterData.id.toString());
+    
+    if (isFavorite(CharacterData.id.toString())){
+        favBtn.classList.add(`favourite-button-selected`);
+    }
     return clone;
 }

@@ -1,4 +1,5 @@
-import * as RickAndMortyApi from "./rickAndMortyApi.js"
+import * as RickAndMortyApi from "./rickAndMortyApi.js";
+import * as CatApi from "./catApi.js";
 import { createCharacterCard,Character } from "./characterCards.js";
 
 const divCharacters = document.getElementById("divCharacters")
@@ -37,5 +38,10 @@ async function getCharactersByFilter() {
     }
 }
 
-RickAndMortyApi.init();
+
+
+(function init() { //iife
+    RickAndMortyApi.init(); //ASK Dylan in they will fire at the same time???
+    CatApi.init();    
+})();
 

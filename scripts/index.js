@@ -8,6 +8,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 import * as RickAndMortyApi from "./rickAndMortyApi.js";
+import * as CatApi from "./catApi.js";
 import { createCharacterCard } from "./characterCards.js";
 const divCharacters = document.getElementById("divCharacters");
 const btnGetRandomCharacter = document.getElementById(`btnRandom`);
@@ -45,4 +46,7 @@ function getCharactersByFilter() {
         }
     });
 }
-RickAndMortyApi.init();
+(function init() {
+    RickAndMortyApi.init(); //ASK Dylan in they will fire at the same time???
+    CatApi.init();
+})();
